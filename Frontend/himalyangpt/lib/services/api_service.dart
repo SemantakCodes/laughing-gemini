@@ -40,7 +40,7 @@ class ApiService {
     // Default to Android emulator address
     return const String.fromEnvironment(
       'BACKEND_URL',
-      defaultValue: 'http://10.0.2.2:8000',
+      defaultValue: 'laughing-gemini-production.up.railway.app',
     );
   }
 
@@ -51,13 +51,15 @@ class ApiService {
   /// Health check to verify backend connectivity
   Future<bool> healthCheck() async {
     try {
-      final response = await http.get(
-        Uri.parse('$_baseUrl$_healthEndpoint'),
-        headers: {'Content-Type': 'application/json'},
-      ).timeout(
-        const Duration(seconds: _timeoutSeconds),
-        onTimeout: () => throw Exception('Health check timed out'),
-      );
+      final response = await http
+          .get(
+            Uri.parse('$_baseUrl$_healthEndpoint'),
+            headers: {'Content-Type': 'application/json'},
+          )
+          .timeout(
+            const Duration(seconds: _timeoutSeconds),
+            onTimeout: () => throw Exception('Health check timed out'),
+          );
 
       return response.statusCode == 200;
     } catch (e) {
@@ -66,7 +68,7 @@ class ApiService {
   }
 
   /// Send a message to the backend and receive a reply
-  /// 
+  ///
   /// Throws exceptions with user-friendly messages:
   /// - "Rate limit reached. Please wait a moment before sending more messages."
   /// - "Backend API error. Please try again."
@@ -87,21 +89,23 @@ class ApiService {
     }
 
     try {
-      final response = await http.post(
-        Uri.parse('$_baseUrl$_chatEndpoint'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'message': message.trim(),
-          'user_id': userId,
-          if (conversationId != null) 'conversation_id': conversationId,
-          if (apiKey != null && apiKey.trim().isNotEmpty) 'api_key': apiKey.trim(),
-        }),
-      ).timeout(
-        const Duration(seconds: _timeoutSeconds),
-        onTimeout: () => throw Exception('Request timed out. Please try again.'),
-      );
+      final response = await http
+          .post(
+            Uri.parse('$_baseUrl$_chatEndpoint'),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({
+              'message': message.trim(),
+              'user_id': userId,
+              if (conversationId != null) 'conversation_id': conversationId,
+              if (apiKey != null && apiKey.trim().isNotEmpty)
+                'api_key': apiKey.trim(),
+            }),
+          )
+          .timeout(
+            const Duration(seconds: _timeoutSeconds),
+            onTimeout: () =>
+                throw Exception('Request timed out. Please try again.'),
+          );
 
       // Handle different HTTP status codes
       switch (response.statusCode) {
@@ -116,7 +120,9 @@ class ApiService {
 
         case 429:
           // Rate limit exceeded
-          throw Exception('Rate limit reached. Please wait a moment before sending more messages. (Max 12 requests per minute on free tier)');
+          throw Exception(
+            'Rate limit reached. Please wait a moment before sending more messages. (Max 12 requests per minute on free tier)',
+          );
 
         case 422:
           // Validation error
@@ -125,7 +131,9 @@ class ApiService {
             final detail = data['detail'];
             if (detail is List && detail.isNotEmpty) {
               final error = detail[0] as Map<String, dynamic>?;
-              throw Exception('Invalid input: ${error?['msg'] ?? 'Unknown validation error'}');
+              throw Exception(
+                'Invalid input: ${error?['msg'] ?? 'Unknown validation error'}',
+              );
             } else if (detail is String) {
               throw Exception('Invalid input: $detail');
             } else {
@@ -140,7 +148,9 @@ class ApiService {
           try {
             final data = jsonDecode(response.body) as Map<String, dynamic>;
             final detail = data['detail'] as String?;
-            throw Exception('Backend API error: ${detail ?? 'Please try again.'}');
+            throw Exception(
+              'Backend API error: ${detail ?? 'Please try again.'}',
+            );
           } catch (e) {
             throw Exception('Backend API error. Please try again.');
           }
@@ -150,13 +160,17 @@ class ApiService {
           try {
             final data = jsonDecode(response.body) as Map<String, dynamic>;
             final detail = data['detail'] as String?;
-            throw Exception('Server error: ${detail ?? 'Please try again later.'}');
+            throw Exception(
+              'Server error: ${detail ?? 'Please try again later.'}',
+            );
           } catch (e) {
             throw Exception('Server error. Please try again later.');
           }
 
         default:
-          throw Exception('Failed to get response (HTTP ${response.statusCode}). Please check your backend.');
+          throw Exception(
+            'Failed to get response (HTTP ${response.statusCode}). Please check your backend.',
+          );
       }
     } on SocketException {
       throw Exception('Network error. Please check your internet connection.');
@@ -167,7 +181,9 @@ class ApiService {
       if (e.toString().startsWith('Exception:')) {
         rethrow;
       }
-      throw Exception('Network error. Please check your connection and backend URL.');
+      throw Exception(
+        'Network error. Please check your connection and backend URL.',
+      );
     }
   }
 
