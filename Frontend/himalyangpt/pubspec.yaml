@@ -1,0 +1,28 @@
+name: himalaya_gpt
+description: A Nepali-focused AI assistant powered by HimalayaGPT.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  supabase_flutter: ^2.3.0
+  http: ^1.2.0
+  flutter_animate: ^4.5.0
+  uuid: ^4.3.3
+  intl: ^0.19.0
+  shimmer: ^3.0.0
+  shared_preferences: ^2.2.3
+  connectivity_plus: ^6.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
