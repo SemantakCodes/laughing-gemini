@@ -1,5 +1,5 @@
-name: himalaya_gpt
-description: A Nepali-focused AI assistant powered by HimalayaGPT.
+name: sakshi_ai
+description: A helpful AI assistant named Sakshi.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -26,3 +26,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/

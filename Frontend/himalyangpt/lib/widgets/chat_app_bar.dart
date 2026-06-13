@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/app_theme.dart';
 import '../screens/history_screen.dart';
+import 'settings_dialog.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onClearChat;
@@ -18,26 +19,21 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 16,
       title: Row(
         children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              gradient: const LinearGradient(
-                colors: [AppTheme.primary, AppTheme.accent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: Center(
-              child: Text(
-                'ह',
-                style: GoogleFonts.playfairDisplay(
-                  color: Colors.white,
-                  fontSize: 20,
-                  height: 1.1,
-                ),
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              'assets/logo.png',
+              width: 36,
+              height: 36,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: 36,
+                  height: 36,
+                  color: AppTheme.primary,
+                  child: const Center(child: Icon(Icons.person, color: Colors.white)),
+                );
+              },
             ),
           ),
           const SizedBox(width: 12),
@@ -45,16 +41,16 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'HimalayaGPT',
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 16,
+                'Sakshi AI',
+                style: GoogleFonts.caveat(
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary,
                 ),
               ),
               Text(
-                '0.5B Instruct',
-                style: GoogleFonts.spaceMono(
+                'Helpful Assistant',
+                style: GoogleFonts.nunito(
                   fontSize: 10,
                   color: AppTheme.primary,
                 ),
@@ -79,16 +75,24 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   MaterialPageRoute(builder: (_) => const HistoryScreen()),
                 );
+              } else if (value == 'settings') {
+                showDialog(
+                  context: context,
+                  builder: (_) => const SettingsDialog(),
+                );
               } else if (value == 'clear') {
                 onClearChat();
               } else if (value == 'about') {
                 showAboutDialog(
                   context: context,
-                  applicationName: 'HimalayaGPT',
+                  applicationName: 'Sakshi AI',
                   applicationVersion: '1.0.0',
-                  applicationIcon: const Text('ह', style: TextStyle(color: AppTheme.primary, fontSize: 24)),
+                  applicationIcon: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset('assets/logo.png', width: 48, height: 48, fit: BoxFit.cover, errorBuilder: (c,e,s) => const Icon(Icons.person)),
+                  ),
                   children: [
-                    Text('A Nepali-focused AI assistant.', style: GoogleFonts.dmSans()),
+                    Text('A helpful AI assistant.', style: GoogleFonts.nunito()),
                   ],
                 );
               }
@@ -96,15 +100,19 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
                 value: 'history',
-                child: Text('Chat History', style: GoogleFonts.dmSans(color: AppTheme.textPrimary)),
+                child: Text('Chat History', style: GoogleFonts.nunito(color: AppTheme.textPrimary)),
+              ),
+              PopupMenuItem(
+                value: 'settings',
+                child: Text('API Settings', style: GoogleFonts.nunito(color: AppTheme.textPrimary)),
               ),
               PopupMenuItem(
                 value: 'clear',
-                child: Text('Clear Chat', style: GoogleFonts.dmSans(color: AppTheme.textPrimary)),
+                child: Text('Clear Chat', style: GoogleFonts.nunito(color: AppTheme.textPrimary)),
               ),
               PopupMenuItem(
                 value: 'about',
-                child: Text('About', style: GoogleFonts.dmSans(color: AppTheme.textPrimary)),
+                child: Text('About', style: GoogleFonts.nunito(color: AppTheme.textPrimary)),
               ),
             ],
           ),

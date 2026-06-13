@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import '../models/message.dart';
@@ -105,10 +106,15 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     try {
+      // Fetch custom API key
+      final prefs = await SharedPreferences.getInstance();
+      final customApiKey = prefs.getString('custom_gemini_api_key');
+
       // 1. Fetch AI Reply
       final response = await _apiService.sendMessage(
         userMessage.content,
         globalUserId,
+        apiKey: customApiKey,
       );
 
       // 2. Replace loading message with actual response
@@ -214,26 +220,18 @@ class _ChatScreenState extends State<ChatScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'नमस्ते!',
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 32,
+            'Hello!',
+            style: GoogleFonts.caveat(
+              fontSize: 42,
               color: AppTheme.primary,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Ask me anything in Nepali or English',
-            style: GoogleFonts.dmSans(
-              fontSize: 14,
+            'Ask me anything you like!',
+            style: GoogleFonts.nunito(
+              fontSize: 16,
               color: AppTheme.textSecondary,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'नेपाली · Indic · English · Code · Math',
-            style: GoogleFonts.spaceMono(
-              fontSize: 10,
-              color: AppTheme.textMuted,
             ),
           ),
         ],

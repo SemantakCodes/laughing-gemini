@@ -44,16 +44,16 @@ void main() async {
   }
   globalUserId = storedId;
 
-  runApp(const HimalayaGPTApp());
+  runApp(const SakshiAIApp());
 }
 
-class HimalayaGPTApp extends StatelessWidget {
-  const HimalayaGPTApp({super.key});
+class SakshiAIApp extends StatelessWidget {
+  const SakshiAIApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HimalayaGPT',
+      title: 'Sakshi AI',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.themeData,
       home: const SplashScreen(),

@@ -76,6 +76,7 @@ class ApiService {
     String message,
     String userId, {
     String? conversationId,
+    String? apiKey,
   }) async {
     if (message.trim().isEmpty) {
       throw Exception('Message cannot be empty.');
@@ -95,6 +96,7 @@ class ApiService {
           'message': message.trim(),
           'user_id': userId,
           if (conversationId != null) 'conversation_id': conversationId,
+          if (apiKey != null && apiKey.trim().isNotEmpty) 'api_key': apiKey.trim(),
         }),
       ).timeout(
         const Duration(seconds: _timeoutSeconds),
