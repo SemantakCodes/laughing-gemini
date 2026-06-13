@@ -8,6 +8,7 @@ class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=2000)
     user_id: str = Field(..., description="Valid UUID string")
     conversation_id: Optional[str] = None
+    api_key: Optional[str] = None
 
     @field_validator("message")
     @classmethod

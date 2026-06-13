@@ -50,7 +50,10 @@ async def chat(
         
         # Generate response
         start_time = time.time()
-        reply, tokens_used = await gemini_service.generate(request.message)
+        reply, tokens_used = await gemini_service.generate(
+            request.message, 
+            custom_api_key=request.api_key
+        )
         elapsed_ms = (time.time() - start_time) * 1000
         
         # Log response

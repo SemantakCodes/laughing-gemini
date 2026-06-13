@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -14,7 +14,7 @@ ENV_FILE = BASE_DIR / ".env"
 class Settings(BaseSettings):
     """Application configuration loaded from environment variables."""
     
-    gemini_api_key: str
+    gemini_api_key: Optional[str] = None
     gemini_model: str = "gemini-2.0-flash"
     max_output_tokens: int = 1024
     temperature: float = 0.7

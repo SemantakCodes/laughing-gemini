@@ -1,6 +1,6 @@
-# HimalayaGPT Backend (Gemini Flash — Free)
+# Sakshi AI Backend (Gemini Flash — Free)
 
-A production-ready FastAPI backend for HimalayaGPT powered by **Google Gemini 2.0 Flash**, designed to operate within Google's free tier limits.
+A production-ready FastAPI backend for Sakshi AI powered by **Google Gemini 2.0 Flash**, designed to operate within Google's free tier limits.
 
 ## Features
 
@@ -134,7 +134,7 @@ curl -X POST http://localhost:8000/api/chat \
 Response:
 ```json
 {
-  "reply": "नमस्ते! मैं HimalayaGPT हूँ...",
+  "reply": "नमस्ते! मैं Sakshi AI हूँ...",
   "user_id": "550e8400-e29b-41d4-a716-446655440000",
   "model": "gemini-2.0-flash",
   "tokens_used": 45,

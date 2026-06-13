@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
     Lifespan context manager for startup and shutdown events.
     """
     # Startup
-    logger.info("HimalayaGPT API starting...")
+    logger.info("Sakshi AI API starting...")
     logger.info(f"Model: {settings.gemini_model}")
     logger.info(f"Rate limit: {settings.rate_limit_rpm} RPM")
     logger.info("API ready.")
@@ -37,7 +37,7 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI application
 app = FastAPI(
-    title="HimalayaGPT API",
+    title="Sakshi AI API",
     version="1.0.0",
     description="Nepali AI powered by Gemini Flash (free tier)",
     lifespan=lifespan
@@ -60,7 +60,7 @@ app.include_router(chat_routes.router)
 async def root() -> dict:
     """Root endpoint."""
     return {
-        "message": "HimalayaGPT API",
+        "message": "Sakshi AI API",
         "docs": "/docs",
         "model": settings.gemini_model,
         "status": "running"
